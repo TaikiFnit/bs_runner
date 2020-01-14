@@ -79,9 +79,6 @@ public class BlackSheepController : MonoBehaviour
 
     void onDamaged()
     {
-        Debug.Log("onDamaged");
-        Debug.Log(this.hp);
-
         if (this.deltaInvicible > this.invicibleTime)
         {
             this.isInvincible = false;
@@ -106,7 +103,11 @@ public class BlackSheepController : MonoBehaviour
                     this.deltaInvicible = 0;
                     break;
             }
-            
+
+            // masterにお知らせ
+            GameObject master = GameObject.Find("Master");
+            MasterController masterController =  master.GetComponent<MasterController>();
+            masterController.DecreaseHp();
         }
         
     }

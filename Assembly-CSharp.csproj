@@ -68,6 +68,8 @@
     <Compile Include="Assets\BlockController.cs" />
     <Compile Include="Assets\CameraController.cs" />
     <Compile Include="Assets\MasterController.cs" />
+    <Compile Include="Assets\MountainController.cs" />
+    <Compile Include="Assets\SkyController.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>/Users/taikifnit/Projects/UnityGames/EndlessParrot/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
