@@ -1,15 +1,14 @@
 ﻿<Properties StartupConfiguration="{5BEA92B6-EC17-5B38-45FB-A8A444FB0AF9}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/BlackSheepController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/MasterController.cs">
     <Files>
-      <File FileName="Assets/MasterController.cs" Line="84" Column="27" />
-      <File FileName="Assets/BlackSheepController.cs" Line="1" Column="1" />
+      <File FileName="Assets/MasterController.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="EndlessParrot" expanded="True">
             <Node name="Assets" expanded="True">
-              <Node name="BlackSheepController.cs" selected="True" />
+              <Node name="MasterController.cs" selected="True" />
             </Node>
           </Node>
         </State>
@@ -18,7 +17,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="51007386-0be3-4145-a301-947c086feea1" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bc4c7eaf-673c-453d-9a01-53150e6870d7" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

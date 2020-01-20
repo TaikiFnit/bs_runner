@@ -50,7 +50,6 @@ public class BlackSheepController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.collider.name);
         this.animator.SetTrigger("RunTrigger");
         this.jumpState = JumpState.Running;
     }
@@ -58,7 +57,6 @@ public class BlackSheepController : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        Debug.Log(collision.collider.name);
         this.jumpState = JumpState.Jumping;
         this.animator.SetTrigger("JumpTrigger");
     }
@@ -68,7 +66,10 @@ public class BlackSheepController : MonoBehaviour
         Debug.Log(collision.name);
         switch (collision.name)
         {
-            case "MiscellaneousPrefab":
+            case "block":
+            case "block1":
+            case "block2":
+            case "block3":
                 onDamaged();
                 break;
             default:
