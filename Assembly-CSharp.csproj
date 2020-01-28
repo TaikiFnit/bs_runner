@@ -67,6 +67,8 @@
     <Compile Include="Assets\BlackSheepController.cs" />
     <Compile Include="Assets\BlockController.cs" />
     <Compile Include="Assets\CameraController.cs" />
+    <Compile Include="Assets\GameSetController.cs" />
+    <Compile Include="Assets\ItemController.cs" />
     <Compile Include="Assets\MasterController.cs" />
     <Compile Include="Assets\MountainController.cs" />
     <Compile Include="Assets\SkyController.cs" />

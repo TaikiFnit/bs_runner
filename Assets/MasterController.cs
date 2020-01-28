@@ -2,14 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MasterController : MonoBehaviour
 {
+    public static int scoreInt = 0;
+
+    // getter
+    public static int getHitPoint()
+    {
+        return scoreInt;
+    }
+
     float masterDelta = 0;
     float treeDelta = 0;
     float treeSpan = 1.0f;
     float blockDelta = 0;
     float blockSpan = 1;
+    float[,] coinSpan = new float[3, 3] { { 4, 3, 3 }, { 3, 1.5f, 3 }, { 3, 2, 0.4f } };
+    float[] coinDelta = new float[3] { 0, 0, 0 };
 
     // Prefabs
     public GameObject TreeObject1;
@@ -20,9 +31,15 @@ public class MasterController : MonoBehaviour
     public GameObject Block1;
     public GameObject Block2;
     public GameObject Block3;
+    public GameObject coin;
 
     // non-prefabs
     public GameObject hpHearts;
+    public GameObject score;
+
+    public bool isDead = false;
+    float endDelta = 0;
+    float endSpan = 2.6f;
 
     // Start is called before the first frame update
     void Start()
@@ -31,15 +48,32 @@ public class MasterController : MonoBehaviour
         instantiateMountain(2);
         blockSpan = this.blockSpawnSpan();
         blockSpan = 1;
+        score.GetComponent<Text>().text = "Score: 0";
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(isDead)
+        {
+            endDelta += Time.deltaTime;
+        }
+
+        if(endDelta > endSpan)
+        {
+            SceneManager.LoadScene("GameSet");
+        }
+
+        score.GetComponent<Text>().text = "Score: " + scoreInt.ToString();
         // TREEs
         masterDelta += Time.deltaTime;
         treeDelta += Time.deltaTime;
         blockDelta += Time.deltaTime;
+
+        for (int i = 0; i < coinDelta.Length; i++)
+        {
+            coinDelta[i] += Time.deltaTime;
+        }
 
         if(treeDelta > treeSpan)
         {
@@ -64,6 +98,37 @@ public class MasterController : MonoBehaviour
             GameObject blockObject = Instantiate(block, pos, Quaternion.identity);
             blockObject.name = "block";
             //blockObject.transform.localScale = new Vector3(scale, scale, 1);
+        }
+
+        for(int i = 0; i < coinDelta.Length; i++)
+        {
+            float y = 0;
+            float x = 10;
+            switch(i)
+            {
+                case 0:
+                    y = Random.Range(-2.0f, -3.9f);
+                    x = Random.Range(10, 12);
+                    break;
+                case 1:
+                    y = Random.Range(-1.0f, 2.0f);
+                    x = Random.Range(9, 12);
+                    break;
+                case 2:
+                default:
+                    y = Random.Range(3.5f, 7.0f);
+                    x = Random.Range(9, 14);
+                    break;
+            }
+
+            if(coinDelta[i] > coinSpan[this.currentStage() - 1, i])
+            {
+                coinDelta[i] = 0;
+
+                Vector3 pos = new Vector3(x, y, 0);
+                GameObject coinObject = Instantiate(coin, pos, Quaternion.identity);
+                coinObject.name = "coin";
+            }
         }
     }
 
@@ -150,5 +215,10 @@ public class MasterController : MonoBehaviour
     public void DecreaseHp()
     {
         this.hpHearts.GetComponent<Image>().fillAmount -= 0.333f;
+    }
+
+    public void addScore(int s)
+    {
+        MasterController.scoreInt += s;
     }
 }

@@ -13,8 +13,13 @@ public class SkyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject camera = GameObject.Find("Main Camera");
-        Vector3 cameraPos = camera.transform.position;
-        this.transform.position = new Vector3(cameraPos.x, cameraPos.y, 0);
+        GameObject master = GameObject.Find("Master");
+        MasterController masterController = master.GetComponent<MasterController>();
+        if (masterController.isDead == false)
+        {
+            GameObject camera = GameObject.Find("Main Camera");
+            Vector3 cameraPos = camera.transform.position;
+            this.transform.position = new Vector3(cameraPos.x, cameraPos.y, 0);
+        }
     }
 }

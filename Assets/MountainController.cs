@@ -18,13 +18,16 @@ public class MountainController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = new Vector3(this.transform.position.x - this.speed, this.transform.position.y, this.transform.position.z);
-        if (this.transform.position.x < this.spawnPosition && isInstantiatedNextMountain == false)
+        GameObject master = GameObject.Find("Master");
+        MasterController masterController = master.GetComponent<MasterController>();
+        if (masterController.isDead == false)
         {
-            isInstantiatedNextMountain = true;
-            GameObject master = GameObject.Find("Master");
-            MasterController controller = master.GetComponent<MasterController>();
-            controller.instantiateMountain(type);
+            this.transform.position = new Vector3(this.transform.position.x - this.speed, this.transform.position.y, this.transform.position.z);
+            if (this.transform.position.x < this.spawnPosition && isInstantiatedNextMountain == false)
+            {
+                isInstantiatedNextMountain = true;
+                masterController.instantiateMountain(type);
+            }
         }
     }
 }

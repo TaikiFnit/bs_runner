@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BlackSheepController : MonoBehaviour
 {
     Rigidbody2D rigid2D;
     Animator animator;
-    float jumpForce = 320.0f;
+    float jumpForce = 340.0f;
     public int hp;
     bool isInvincible = false;
     float invicibleTime = 1.3f;
     float deltaInvicible = 0;
+    int jumpCount = 0;
 
     enum JumpState
     {
@@ -44,7 +46,11 @@ public class BlackSheepController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space) && jumpState != JumpState.Downing)
         {
-            this.rigid2D.AddForce(transform.up * this.jumpForce);
+            if (jumpCount < 2)
+            {
+                this.rigid2D.AddForce(transform.up * this.jumpForce);
+                this.jumpCount++;
+            }
         }
     }
 
@@ -52,6 +58,7 @@ public class BlackSheepController : MonoBehaviour
     {
         this.animator.SetTrigger("RunTrigger");
         this.jumpState = JumpState.Running;
+        this.jumpCount = 0;
     }
 
 
@@ -64,6 +71,7 @@ public class BlackSheepController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.name);
+        
         switch (collision.name)
         {
             case "block":
@@ -72,10 +80,22 @@ public class BlackSheepController : MonoBehaviour
             case "block3":
                 onDamaged();
                 break;
+            case "coin":
+                fetchCoin(collision.gameObject);
+                break;
             default:
           
                 break;
         }
+    }
+
+    void fetchCoin(GameObject coin)
+    {
+        ItemController coinController = coin.GetComponent<ItemController>();
+        coinController.fetched();
+        GameObject master = GameObject.Find("Master");
+        MasterController masterController = master.GetComponent<MasterController>();
+        masterController.addScore(10);
     }
 
     void onDamaged()
@@ -87,11 +107,18 @@ public class BlackSheepController : MonoBehaviour
 
         if (isInvincible == false)
         {
+            // masterにお知らせ
+            GameObject master = GameObject.Find("Master");
+            MasterController masterController = master.GetComponent<MasterController>();
+            masterController.DecreaseHp();
+
+
             this.hp = this.hp - 1;
             switch (this.hp)
             {
                 case 0:
                     this.animator.SetTrigger("DeadTrigger");
+                    masterController.isDead = true;
                     break;
                 case 1:
                     this.animator.SetTrigger("Damaged2Trigger");
@@ -104,12 +131,6 @@ public class BlackSheepController : MonoBehaviour
                     this.deltaInvicible = 0;
                     break;
             }
-
-            // masterにお知らせ
-            GameObject master = GameObject.Find("Master");
-            MasterController masterController =  master.GetComponent<MasterController>();
-            masterController.DecreaseHp();
         }
-        
     }
 }
